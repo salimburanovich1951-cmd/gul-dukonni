@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gulzor - Nafis Gullar & Guldastalar Do'koni</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        emerald: {
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22',
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/custom.css">
+</head>
+<body class="bg-[#faf7f5] text-gray-800 font-sans antialiased selection:bg-rose-500 selection:text-white">
+
+    <!-- Top Announcement Bar -->
+    <div class="bg-gradient-to-r from-rose-900 via-rose-800 to-emerald-950 text-white text-xs sm:text-sm py-2 px-4 text-center font-medium flex items-center justify-center gap-2 relative z-50">
+        <span class="inline-flex items-center gap-1.5 animate-pulse">
+            <i data-lucide="sparkles" class="w-4 h-4 text-rose-300"></i>
+            <span>Termiz shahri bo'ylab 60 daqiqada tezkor yetkazib berish!</span>
+        </span>
+        <span class="hidden md:inline text-rose-200">|</span>
+        <span class="hidden md:inline">10% chegirma kodi: <strong class="bg-rose-700/60 px-2 py-0.5 rounded text-rose-100 font-mono tracking-wider">BAHOR2026</strong></span>
+        <a href="#katalog" class="underline hover:text-rose-200 ml-2 font-semibold">Gullarni ko'rish &rarr;</a>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-rose-100 transition-all duration-300 shadow-sm" id="mainHeader">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="/" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-500 via-rose-600 to-pink-500 flex items-center justify-center text-white shadow-lg shadow-rose-500/25 group-hover:scale-105 transition-transform">
+                        <i data-lucide="flower2" class="w-7 h-7"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-2xl font-bold tracking-tight text-gray-900 group-hover:text-rose-600 transition-colors">Gulzor</span>
+                        <p class="text-[10px] uppercase font-bold tracking-widest text-rose-500 -mt-1">Premium Floristika</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden lg:flex items-center gap-8 text-sm font-semibold text-gray-700">
+                    <a href="#bosh-sahifa" class="hover:text-rose-600 transition-colors">Bosh sahifa</a>
+                    <a href="#katalog" class="hover:text-rose-600 transition-colors">Gullar katalogi</a>
+                    <a href="#afzalliklar" class="hover:text-rose-600 transition-colors">Afzalliklar</a>
+                    <a href="#sharhlar" class="hover:text-rose-600 transition-colors">Mijozlar fikri</a>
+                    <a href="#aloqa" class="hover:text-rose-600 transition-colors">Bog'lanish</a>
+                    <a href="/admin" class="text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-emerald-200 transition-all text-xs font-bold">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+                        <span>Admin Panel</span>
+                    </a>
+                </nav>
+
+                <!-- Actions: Search, Wishlist, Cart -->
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <!-- Search button (Desktop & Mobile) -->
+                    <div class="relative hidden sm:block w-48 md:w-64">
+                        <input type="text" id="searchInput" placeholder="Gul izlash..." 
+                            class="w-full bg-gray-50 border border-gray-200 focus:border-rose-400 focus:bg-white text-xs sm:text-sm rounded-full pl-9 pr-4 py-2 outline-none transition-all duration-200 placeholder-gray-400">
+                        <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-2.5"></i>
+                    </div>
+
+                    <!-- Wishlist button -->
+                    <button onclick="toggleWishlistModal()" class="relative p-2.5 text-gray-600 hover:text-rose-600 rounded-full hover:bg-rose-50 transition-colors" title="Sevimlilar">
+                        <i data-lucide="heart" class="w-5 h-5"></i>
+                        <span id="wishlistCount" class="absolute top-1 right-1 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                    </button>
+
+                    <!-- Cart button -->
+                    <button onclick="openCartDrawer()" class="relative flex items-center gap-2 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 text-white px-4 py-2.5 rounded-full shadow-md shadow-rose-500/20 active:scale-95 transition-all" title="Savatcha">
+                        <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                        <span class="hidden sm:inline text-xs font-bold">Savat</span>
+                        <span id="cartCountBadge" class="bg-white text-rose-600 text-xs font-extrabold px-2 py-0.5 rounded-full">0</span>
+                    </button>
+
+                    <!-- Mobile Menu Hamburger -->
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-gray-700 hover:text-rose-600 focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-rose-100 bg-white/95 px-6 py-4 space-y-3">
+            <div class="sm:hidden mb-3">
+                <input type="text" id="mobileSearchInput" placeholder="Gul qidirish..." class="w-full bg-gray-100 border border-gray-200 rounded-full px-4 py-2 text-sm outline-none">
+            </div>
+            <a href="#bosh-sahifa" onclick="toggleMobileMenu()" class="block font-medium text-gray-700 hover:text-rose-600">Bosh sahifa</a>
+            <a href="#katalog" onclick="toggleMobileMenu()" class="block font-medium text-gray-700 hover:text-rose-600">Gullar katalogi</a>
+            <a href="#afzalliklar" onclick="toggleMobileMenu()" class="block font-medium text-gray-700 hover:text-rose-600">Afzalliklar</a>
+            <a href="#sharhlar" onclick="toggleMobileMenu()" class="block font-medium text-gray-700 hover:text-rose-600">Sharhlar</a>
+            <a href="#aloqa" onclick="toggleMobileMenu()" class="block font-medium text-gray-700 hover:text-rose-600">Bog'lanish</a>
+            <a href="/admin" class="inline-flex items-center gap-2 text-emerald-700 font-bold text-sm bg-emerald-50 px-3 py-1.5 rounded-full">
+                <i data-lucide="shield-check" class="w-4 h-4"></i> Admin Panel
+            </a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="bosh-sahifa" class="relative overflow-hidden bg-gradient-to-b from-rose-50/70 via-[#faf7f5] to-[#faf7f5] pt-12 pb-20">
+        <!-- Background Decorative Petals -->
+        <div class="absolute top-10 left-10 w-72 h-72 bg-pink-200/40 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-rose-200/30 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Left text column -->
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-100 text-rose-700 text-xs font-bold tracking-wide uppercase">
+                        <i data-lucide="heart" class="w-3.5 h-3.5 fill-rose-500 text-rose-500"></i>
+                        <span>Har bir dasta yurakdan yaratiladi</span>
+                    </div>
+
+                    <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-[1.15]">
+                        Eng go'zal hislar uchun <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-600 via-pink-600 to-rose-700">nafis gullar</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-gray-600 max-w-xl mx-auto lg:mx-0 font-light leading-relaxed">
+                        Tug'ilgan kunlar, to'ylar va kutilmagan quvonchli lahzalar uchun professional floristlarimiz tomonidan terilgan 100% yangi guldastalar.
+                    </p>
+
+                    <!-- Action buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#katalog" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold rounded-2xl shadow-xl shadow-rose-500/30 hover:shadow-rose-500/40 transform hover:-translate-y-0.5 active:translate-y-0 transition-all text-center flex items-center justify-center gap-2">
+                            <span>Guldasta tanlash</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#aloqa" class="w-full sm:w-auto px-7 py-4 bg-white hover:bg-rose-50/80 text-gray-800 font-bold rounded-2xl border border-rose-200/80 shadow-sm hover:border-rose-300 transition-all text-center flex items-center justify-center gap-2">
+                            <i data-lucide="phone-call" class="w-5 h-5 text-rose-500"></i>
+                            <span>Konsultatsiya olish</span>
+                        </a>
+                    </div>
+
+                    <!-- Trust counters -->
+                    <div class="pt-8 border-t border-rose-100 grid grid-cols-3 gap-4 text-center lg:text-left">
+                        <div>
+                            <div class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">12,500+</div>
+                            <div class="text-xs text-gray-500 font-medium">Bajarilgan buyurtmalar</div>
+                        </div>
+                        <div>
+                            <div class="font-serif text-2xl sm:text-3xl font-bold text-rose-600">60 daqiqa</div>
+                            <div class="text-xs text-gray-500 font-medium">Tezkor yetkazib berish</div>
+                        </div>
+                        <div>
+                            <div class="font-serif text-2xl sm:text-3xl font-bold text-gray-900">4.9 / 5.0</div>
+                            <div class="text-xs text-gray-500 font-medium">Mijozlar mamnuniyati</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right image column -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <!-- Main Card -->
+                        <div class="relative z-10 overflow-hidden rounded-3xl shadow-2xl bg-white border-4 border-white transform hover:rotate-1 transition-transform duration-500">
+                            <img src="https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=800&q=80" 
+                                alt="Nafis Guldasta" class="w-full h-[440px] object-cover object-center transform hover:scale-105 transition-transform duration-700">
+                            
+                            <!-- Overlay Badge -->
+                            <div class="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md p-4 rounded-2xl border border-white/60 shadow-lg flex items-center justify-between">
+                                <div>
+                                    <div class="text-xs font-bold uppercase tracking-wider text-rose-500">Kunning eng sara tanlovi</div>
+                                    <div class="font-serif font-bold text-gray-900 text-lg">Bahor Simfoniyasi</div>
+                                    <div class="text-rose-600 font-extrabold text-sm">470,000 so'm <span class="line-through text-gray-400 font-normal text-xs ml-1">520,000</span></div>
+                                </div>
+                                <button onclick="addToCartById(2)" class="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center hover:bg-rose-700 shadow-md transition-colors" title="Savatga qo'shish">
+                                    <i data-lucide="plus" class="w-5 h-5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Floating Badges -->
+                        <div class="absolute -top-4 -left-4 z-20 bg-white/95 backdrop-blur-sm shadow-xl rounded-2xl p-3 border border-rose-100 flex items-center gap-3 animate-bounce-slow">
+                            <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700">
+                                <i data-lucide="clock" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-extrabold text-gray-900">24/7 Qabul</div>
+                                <div class="text-[10px] text-gray-500">Har qanday vaqtda tayyormiz</div>
+                            </div>
+                        </div>
+
+                        <div class="absolute -bottom-5 -right-3 z-20 bg-white/95 backdrop-blur-sm shadow-xl rounded-2xl p-3 border border-rose-100 flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-rose-100 flex items-center justify-center text-rose-600">
+                                <i data-lucide="camera" class="w-5 h-5"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-extrabold text-gray-900">Fotohisobot</div>
+                                <div class="text-[10px] text-gray-500">Yetkazishdan oldin rasm</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Services / Trust Pillars -->
+    <section class="py-8 bg-white border-y border-rose-100/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="flex flex-col items-center p-3">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-3">
+                        <i data-lucide="truck" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-gray-900">Tez va bepul yetkazish</h3>
+                    <p class="text-xs text-gray-500 mt-1">500,000 so'mdan yuqori buyurtmalarga</p>
+                </div>
+                <div class="flex flex-col items-center p-3">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-3">
+                        <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-gray-900">100% Yangi gullar</h3>
+                    <p class="text-xs text-gray-500 mt-1">Har kuni yangi partiya keltiriladi</p>
+                </div>
+                <div class="flex flex-col items-center p-3">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-3">
+                        <i data-lucide="gift" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-gray-900">Tabriknoma sovg'a</h3>
+                    <p class="text-xs text-gray-500 mt-1">Har bir buyurtmaga bepul karta</p>
+                </div>
+                <div class="flex flex-col items-center p-3">
+                    <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-3">
+                        <i data-lucide="credit-card" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-bold text-sm text-gray-900">Xavfsiz to'lovlar</h3>
+                    <p class="text-xs text-gray-500 mt-1">Click, Payme, Uzum & Naqd</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section id="katalog" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+            <div>
+                <span class="text-xs font-bold text-rose-600 tracking-widest uppercase">Gullar Kolleksiyasi</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-gray-900 mt-1">Bizning Sara Guldastalarimiz</h2>
+                <p class="text-sm text-gray-500 mt-2 max-w-lg">O'zingizga yoqqan toifani tanlang yoki narx va saralash orqali qulay qidiring.</p>
+            </div>
+
+            <!-- Sort dropdown & results count -->
+            <div class="flex items-center gap-3">
+                <span id="productCountLabel" class="text-xs font-semibold text-gray-500">12 ta mahsulot</span>
+                <select id="sortSelect" onchange="loadProducts()" class="bg-white border border-gray-200 text-gray-700 text-xs sm:text-sm rounded-xl px-3 py-2.5 outline-none focus:border-rose-400 font-medium">
+                    <option value="default">Odatiy tartib</option>
+                    <option value="popular">Ommaboplar</option>
+                    <option value="price_asc">Narx: Arzondan qimmatga</option>
+                    <option value="price_desc">Narx: Qimmatdan arzonga</option>
+                    <option value="rating">Reyting bo'yicha</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Category Pills Bar -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none" id="categoryBar">
+            <button onclick="setCategory('all')" data-cat="all" class="cat-pill active px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-rose-600 text-white shadow-md shadow-rose-600/20">
+                🌸 Barchasi
+            </button>
+            <button onclick="setCategory('roses')" data-cat="roses" class="cat-pill px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-gray-700 hover:bg-rose-50 border border-gray-200">
+                🌹 Atirgullar
+            </button>
+            <button onclick="setCategory('bouquets')" data-cat="bouquets" class="cat-pill px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-gray-700 hover:bg-rose-50 border border-gray-200">
+                💐 Mualliflik guldastalari
+            </button>
+            <button onclick="setCategory('boxes')" data-cat="boxes" class="cat-pill px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-gray-700 hover:bg-rose-50 border border-gray-200">
+                🎁 Shlyapa qutidagi gullar
+            </button>
+            <button onclick="setCategory('tulips')" data-cat="tulips" class="cat-pill px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-gray-700 hover:bg-rose-50 border border-gray-200">
+                🌷 Gollandiya lolalari
+            </button>
+            <button onclick="setCategory('plants')" data-cat="plants" class="cat-pill px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-gray-700 hover:bg-rose-50 border border-gray-200">
+                🪴 Xona o'simliklari
+            </button>
+            <button onclick="setCategory('vip')" data-cat="vip" class="cat-pill px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all whitespace-nowrap bg-white text-gray-700 hover:bg-rose-50 border border-gray-200">
+                👑 VIP & 101 Atirgul
+            </button>
+        </div>
+
+        <!-- Products Grid Container -->
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Dynamic product cards populated via JS -->
+            <div class="col-span-full py-16 text-center text-gray-400">
+                <i data-lucide="loader-2" class="w-8 h-8 animate-spin mx-auto text-rose-500 mb-2"></i>
+                <p>Gullar yuklanmoqda...</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Why Choose Us Banner / Experience -->
+    <section id="afzalliklar" class="py-20 bg-gradient-to-br from-emerald-950 via-slate-900 to-rose-950 text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <span class="text-xs uppercase font-extrabold text-rose-400 tracking-widest">Bizning farqimiz</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold mt-2">Nega mijozlar "Gulzor"ni tanlashadi?</h2>
+                <p class="text-sm text-gray-300 mt-3 font-light">Biz faqat gul sotmaymiz, balki eng samimiy his-tuyg'ularingizni go'zallik orqali yetkazamiz.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/15 hover:bg-white/15 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-rose-500/30 text-rose-300 flex items-center justify-center mb-6">
+                        <i data-lucide="sparkles" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">Har doim yangi va xushbo'y</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">Gullar maxsus namlik va harorat saqlanadigan sovutgichlarda asraladi. Sizga yetib borguncha suv kapsulasi bilan himoyalanadi.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/15 hover:bg-white/15 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/30 text-emerald-300 flex items-center justify-center mb-6">
+                        <i data-lucide="send" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">Tezkor & Anonim yetkazish</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">Qabul qiluvchiga kutilmagan syurpriz qilishni xohlaysizmi? Biz buyurtmangizni to'liq sir saqlagan holda yetkazib beramiz.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/15 hover:bg-white/15 transition-all">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500/30 text-amber-300 flex items-center justify-center mb-6">
+                        <i data-lucide="smile" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-3">Professional Floristlar</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">Xalqaro standartlarda o'qigan malakali usta floristlarimiz har bir guldastaga alohida san'at asari sifatida yondashadi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section id="sharhlar" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs uppercase font-extrabold text-rose-600 tracking-widest">Haqiqiy Fikrlar</span>
+            <h2 class="font-serif text-3xl font-bold text-gray-900 mt-1">Mijozlarimiz nima deydi?</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-rose-100 flex flex-col justify-between">
+                <div>
+                    <div class="flex text-amber-400 mb-3">
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic">"Onajonimning tavallud ayyomiga qizil atirgullar buyurtma berdim. 45 daqiqada yetkazib berishdi! Guldasta juda chiroyli bezatilgan edi."</p>
+                </div>
+                <div class="flex items-center gap-3 mt-6 pt-4 border-t border-gray-100">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-sm">MK</div>
+                    <div>
+                        <div class="text-sm font-bold text-gray-900">Malika Karimova</div>
+                        <div class="text-xs text-gray-400">Termiz shahri (Markaz)</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-rose-100 flex flex-col justify-between">
+                <div>
+                    <div class="flex text-amber-400 mb-3">
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic">"Shlyapa qutisidagi gullar ajoyib g'oya! Vaza izlab o'tirish shart emas, suv kapsulasi bor ekan. Rafiqam juda xursand bo'ldi."</p>
+                </div>
+                <div class="flex items-center gap-3 mt-6 pt-4 border-t border-gray-100">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-sm">SR</div>
+                    <div>
+                        <div class="text-sm font-bold text-gray-900">Sardor Rustamov</div>
+                        <div class="text-xs text-gray-400">Denov tumani, Surxondaryo</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-rose-100 flex flex-col justify-between">
+                <div>
+                    <div class="flex text-amber-400 mb-3">
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                        <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+                    </div>
+                    <p class="text-gray-600 text-sm italic">"Saytdan buyurtma qilish juda qulay. Tabriknomaga o'z so'zlarimni yozdim va xuddi shunday chiroyli xat qilib jo'natishdi. Katta rahmat!"</p>
+                </div>
+                <div class="flex items-center gap-3 mt-6 pt-4 border-t border-gray-100">
+                    <div class="w-10 h-10 rounded-full bg-rose-100 text-rose-700 font-bold flex items-center justify-center text-sm">DA</div>
+                    <div>
+                        <div class="text-sm font-bold text-gray-900">Dilnoza Axmedova</div>
+                        <div class="text-xs text-gray-400">Termiz shahri</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="aloqa" class="bg-gray-900 text-gray-300 pt-16 pb-12 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-gray-800">
+                <!-- Col 1 -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-rose-600 flex items-center justify-center text-white">
+                            <i data-lucide="flower2" class="w-6 h-6"></i>
+                        </div>
+                        <span class="font-serif text-2xl font-bold text-white">Gulzor</span>
+                    </div>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Termiz shahri va butun Surxondaryo viloyatiga yangi gullar, shlyapa qutilari va sovg'alarni tezkor yetkazib berish xizmati. Har bir kunni bayramga aylantiring.
+                    </p>
+                    <div class="flex gap-3 text-gray-400">
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-rose-600 hover:text-white flex items-center justify-center transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-rose-600 hover:text-white flex items-center justify-center transition-colors"><i data-lucide="send" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-full bg-gray-800 hover:bg-rose-600 hover:text-white flex items-center justify-center transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <!-- Col 2 -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Gullar Kategoriyalari</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#katalog" onclick="setCategory('roses')" class="hover:text-rose-400 transition-colors">Ekvador Qizil Atirgullari</a></li>
+                        <li><a href="#katalog" onclick="setCategory('bouquets')" class="hover:text-rose-400 transition-colors">Mualliflik Aralash Guldastalari</a></li>
+                        <li><a href="#katalog" onclick="setCategory('boxes')" class="hover:text-rose-400 transition-colors">Shlyapa Qutisidagi Gullar</a></li>
+                        <li><a href="#katalog" onclick="setCategory('tulips')" class="hover:text-rose-400 transition-colors">Gollandiya Lolalari</a></li>
+                        <li><a href="#katalog" onclick="setCategory('plants')" class="hover:text-rose-400 transition-colors">Tirik Xona O'simliklari</a></li>
+                        <li><a href="#katalog" onclick="setCategory('vip')" class="hover:text-rose-400 transition-colors">101 Atirgul & To'y Guldastalari</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Ish Vaqti & Manzil</h4>
+                    <ul class="space-y-3 text-xs">
+                        <li class="flex items-start gap-2.5">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-rose-500 shrink-0 mt-0.5"></i>
+                            <span>Termiz sh., At-Termiziy ko'chasi, 24-uy (Mo'ljal: San'at saroyi ro'parasi)</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="clock" class="w-4 h-4 text-rose-500 shrink-0"></i>
+                            <span>24/7 buyurtma qabul qilish va yetkazish</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="phone" class="w-4 h-4 text-rose-500 shrink-0"></i>
+                            <span class="font-bold text-white">+998 (76) 220-45-45</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="mail" class="w-4 h-4 text-rose-500 shrink-0"></i>
+                            <span>termiz@gulzor-flowers.uz</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Col 4 -->
+                <div>
+                    <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Xavfsiz To'lov</h4>
+                    <p class="text-xs text-gray-400 mb-3">Barcha ommabop milliy va xalqaro to'lov tizimlarini qabul qilamiz:</p>
+                    <div class="flex flex-wrap gap-2 text-xs font-bold text-gray-300">
+                        <span class="bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-700">Click</span>
+                        <span class="bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-700">Payme</span>
+                        <span class="bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-700">Uzum Pay</span>
+                        <span class="bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-700">Naqd pul</span>
+                    </div>
+                    <div class="mt-6">
+                        <a href="/admin" class="inline-flex items-center gap-2 text-xs text-rose-400 hover:text-rose-300 font-semibold underline">
+                            <i data-lucide="lock" class="w-3.5 h-3.5"></i>
+                            <span>Do'kon boshqaruviga kirish</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+                <p>&copy; 2026 "Gulzor" gullar do'koni. Barcha huquqlar himoyalangan.</p>
+                <p>Nafis did va yuqori darajadagi xizmat.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- CART SLIDE-OVER DRAWER -->
+    <div id="cartDrawerBackdrop" onclick="closeCartDrawer()" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+    <div id="cartDrawer" class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <!-- Header -->
+        <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-rose-50/50">
+            <div class="flex items-center gap-2">
+                <i data-lucide="shopping-bag" class="w-5 h-5 text-rose-600"></i>
+                <h3 class="font-serif font-bold text-lg text-gray-900">Sizning Savatingiz</h3>
+                <span id="cartDrawerCount" class="text-xs bg-rose-100 text-rose-700 px-2 py-0.5 rounded-full font-bold">0</span>
+            </div>
+            <button onclick="closeCartDrawer()" class="p-2 text-gray-400 hover:text-gray-700 rounded-full hover:bg-gray-100">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- Items List Container -->
+        <div id="cartItemsList" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <!-- Rendered by JS -->
+        </div>
+
+        <!-- Extra Gift Addons -->
+        <div class="p-4 bg-gray-50 border-t border-gray-100 space-y-2">
+            <div class="text-xs font-bold text-gray-700 flex items-center gap-1.5">
+                <i data-lucide="gift" class="w-4 h-4 text-rose-500"></i>
+                <span>Guldastaga qo'shimchalar qo'shish:</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-xs">
+                <label class="flex items-center gap-2 bg-white p-2 rounded-xl border border-gray-200 cursor-pointer hover:border-rose-300">
+                    <input type="checkbox" id="extraChocolateCheck" onchange="calculateCartTotals()" class="rounded text-rose-600 focus:ring-rose-500">
+                    <div>
+                        <div class="font-bold text-gray-800">Shokolad</div>
+                        <div class="text-[10px] text-gray-500">+50,000 so'm</div>
+                    </div>
+                </label>
+                <label class="flex items-center gap-2 bg-white p-2 rounded-xl border border-gray-200 cursor-pointer hover:border-rose-300">
+                    <input type="checkbox" id="extraToyCheck" onchange="calculateCartTotals()" class="rounded text-rose-600 focus:ring-rose-500">
+                    <div>
+                        <div class="font-bold text-gray-800">Ayiqcha</div>
+                        <div class="text-[10px] text-gray-500">+75,000 so'm</div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <!-- Promo Code & Totals -->
+        <div class="p-6 border-t border-gray-100 bg-white space-y-3">
+            <!-- Promo code input -->
+            <div class="flex gap-2">
+                <input type="text" id="promoInput" placeholder="Promokod (masalan, BAHOR2026)" class="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs uppercase font-mono outline-none focus:border-rose-400">
+                <button onclick="applyPromoCode()" class="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white text-xs font-bold rounded-xl transition-colors">Qo'llash</button>
+            </div>
+            <div id="promoFeedback" class="text-[11px] font-semibold hidden"></div>
+
+            <!-- Price Breakdown -->
+            <div class="space-y-1.5 text-xs text-gray-600 pt-2">
+                <div class="flex justify-between">
+                    <span>Mahsulotlar:</span>
+                    <span id="cartSubtotal" class="font-bold text-gray-900">0 so'm</span>
+                </div>
+                <div class="flex justify-between text-rose-600 font-semibold" id="cartDiscountRow" style="display: none;">
+                    <span>Chegirma (10%):</span>
+                    <span id="cartDiscount">-0 so'm</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Yetkazib berish:</span>
+                    <span id="cartDeliveryFee" class="font-bold text-emerald-600">Bepul</span>
+                </div>
+                <div class="border-t border-gray-200 pt-2 flex justify-between text-base font-extrabold text-gray-900">
+                    <span>Jami to'lov:</span>
+                    <span id="cartTotal" class="text-rose-600">0 so'm</span>
+                </div>
+            </div>
+
+            <!-- Checkout button -->
+            <button onclick="openCheckoutModal()" id="checkoutButton" class="w-full py-3.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/25 active:scale-98 transition-all flex items-center justify-center gap-2">
+                <span>Buyurtmani rasmiylashtirish</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- QUICK VIEW PRODUCT MODAL -->
+    <div id="quickViewModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col md:flex-row animate-scale-up">
+            <button onclick="closeQuickView()" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/80 backdrop-blur-md text-gray-600 hover:text-gray-900 flex items-center justify-center shadow-md">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <!-- Image side -->
+            <div class="md:w-1/2 bg-gray-100 relative min-h-[280px] md:min-h-full">
+                <img id="qvImage" src="" alt="" class="w-full h-full object-cover">
+                <div id="qvBadge" class="absolute top-4 left-4 bg-rose-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"></div>
+            </div>
+
+            <!-- Details side -->
+            <div class="md:w-1/2 p-6 md:p-8 flex flex-col justify-between overflow-y-auto">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-2 text-xs font-semibold text-rose-600 uppercase tracking-wider" id="qvCategory">
+                        Atirgullar
+                    </div>
+
+                    <h3 id="qvTitle" class="font-serif text-2xl font-bold text-gray-900 leading-tight"></h3>
+
+                    <div class="flex items-center gap-3">
+                        <div class="flex text-amber-400" id="qvStars"></div>
+                        <span id="qvRatingText" class="text-xs text-gray-500 font-medium"></span>
+                    </div>
+
+                    <div class="flex items-baseline gap-3">
+                        <span id="qvPrice" class="text-2xl font-extrabold text-rose-600"></span>
+                        <span id="qvOldPrice" class="text-sm text-gray-400 line-through"></span>
+                    </div>
+
+                    <p id="qvDescription" class="text-xs sm:text-sm text-gray-600 leading-relaxed"></p>
+
+                    <!-- Flower Size Selector -->
+                    <div class="space-y-1.5 pt-2">
+                        <label class="text-xs font-bold text-gray-700">Guldasta hajmi:</label>
+                        <div class="grid grid-cols-3 gap-2 text-xs font-semibold">
+                            <button type="button" onclick="selectQvSize('standard', this)" class="qv-size-btn active py-2 border rounded-xl text-center border-rose-500 bg-rose-50 text-rose-700">Standart</button>
+                            <button type="button" onclick="selectQvSize('medium', this)" class="qv-size-btn py-2 border rounded-xl text-center border-gray-200 text-gray-700 hover:border-rose-300">+30% Katta</button>
+                            <button type="button" onclick="selectQvSize('deluxe', this)" class="qv-size-btn py-2 border rounded-xl text-center border-gray-200 text-gray-700 hover:border-rose-300">Royal Luxe</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add to cart CTA -->
+                <div class="pt-6 border-t border-gray-100 flex items-center gap-3 mt-6">
+                    <div class="flex items-center border border-gray-200 rounded-2xl bg-gray-50 p-1">
+                        <button onclick="decrementQvQty()" class="w-8 h-8 rounded-xl flex items-center justify-center text-gray-600 hover:bg-white">-</button>
+                        <span id="qvQty" class="w-8 text-center text-xs font-bold text-gray-900">1</span>
+                        <button onclick="incrementQvQty()" class="w-8 h-8 rounded-xl flex items-center justify-center text-gray-600 hover:bg-white">+</button>
+                    </div>
+
+                    <button onclick="addQvToCart()" class="flex-1 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/25 transition-all text-xs sm:text-sm flex items-center justify-center gap-2">
+                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                        <span>Savatga qo'shish</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT MODAL -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative max-h-[92vh] flex flex-col animate-scale-up">
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-rose-50 to-pink-50">
+                <div>
+                    <h3 class="font-serif font-bold text-xl text-gray-900">Buyurtmani rasmiylashtirish</h3>
+                    <p class="text-xs text-gray-500 mt-0.5">Qabul qiluvchi ma'lumotlari va yetkazib berish vaqtini kiriting</p>
+                </div>
+                <button onclick="closeCheckoutModal()" class="p-2 text-gray-400 hover:text-gray-700 rounded-full hover:bg-white/80">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Form Body -->
+            <form id="orderForm" onsubmit="submitOrder(event)" class="flex-1 overflow-y-auto p-6 space-y-6">
+                <!-- Step 1: Buyurtmachi -->
+                <div class="space-y-3">
+                    <h4 class="text-xs font-extrabold text-rose-600 uppercase tracking-wider flex items-center gap-1.5">
+                        <i data-lucide="user" class="w-4 h-4"></i> 1. Buyurtmachi ma'lumotlari
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Ismingiz *</label>
+                            <input type="text" name="customer_name" required placeholder="Masalan: Sardor" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:border-rose-400 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Telefon raqamingiz *</label>
+                            <input type="tel" name="customer_phone" required placeholder="+998 90 123 45 67" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:border-rose-400 outline-none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Qabul qiluvchi -->
+                <div class="space-y-3 pt-3 border-t border-gray-100">
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-xs font-extrabold text-rose-600 uppercase tracking-wider flex items-center gap-1.5">
+                            <i data-lucide="heart" class="w-4 h-4"></i> 2. Qabul qiluvchi shaxs
+                        </h4>
+                        <label class="flex items-center gap-2 text-xs text-gray-600 cursor-pointer">
+                            <input type="checkbox" id="selfRecipientCheck" onchange="toggleSelfRecipient(this)" class="rounded text-rose-600">
+                            <span>O'zim qabul qilaman</span>
+                        </label>
+                    </div>
+
+                    <div id="recipientFields" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Qabul qiluvchi ismi</label>
+                            <input type="text" name="recipient_name" id="recNameInput" placeholder="Masalan: Nilufar" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:border-rose-400 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Qabul qiluvchi telefoni</label>
+                            <input type="tel" name="recipient_phone" id="recPhoneInput" placeholder="+998 99 987 65 43" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:border-rose-400 outline-none">
+                        </div>
+                    </div>
+
+                    <label class="flex items-center gap-2 text-xs text-gray-700 bg-rose-50/60 p-2.5 rounded-xl border border-rose-100 cursor-pointer">
+                        <input type="checkbox" name="is_anonymous" class="rounded text-rose-600">
+                        <span class="font-medium">Anonim yetkazish (kuryer buyurtmachi ismini oshkor qilmaydi)</span>
+                    </label>
+                </div>
+
+                <!-- Step 3: Yetkazib berish manzili va vaqti -->
+                <div class="space-y-3 pt-3 border-t border-gray-100">
+                    <h4 class="text-xs font-extrabold text-rose-600 uppercase tracking-wider flex items-center gap-1.5">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i> 3. Yetkazib berish manzili va hududi
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Yetkazish hududi *</label>
+                            <select name="delivery_region" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:border-rose-400 outline-none font-medium">
+                                <option value="Termiz shahri (Markaz)">🌸 Termiz shahri (Markaz - 60 daqiqada)</option>
+                                <option value="Termiz shahri (Shimoliy/Sharqiy mavzelar)">🌸 Termiz shahri (Barcha mahallalar)</option>
+                                <option value="Termiz tumani">📍 Termiz tumani (Atrof hududlar)</option>
+                                <option value="Angor tumani">📍 Angor tumani</option>
+                                <option value="Jarqo'rg'on tumani">📍 Jarqo'rg'on tumani</option>
+                                <option value="Denov tumani">📍 Denov tumani</option>
+                                <option value="Sho'rchi tumani">📍 Sho'rchi tumani</option>
+                                <option value="Qumqo'rg'on tumani">📍 Qumqo'rg'on tumani</option>
+                                <option value="Qiziriq tumani">📍 Qiziriq tumani</option>
+                                <option value="Boysun tumani">📍 Boysun tumani</option>
+                                <option value="Boshqa tumanlar">📍 Surxondaryoning boshqa tumanlari</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Qulay vaqt oralig'i *</label>
+                            <select name="delivery_time" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:border-rose-400 outline-none font-medium">
+                                <option value="Eng yaqin 60 daqiqa ichida">⚡ Eng yaqin 60 daqiqa ichida (Termiz sh.)</option>
+                                <option value="09:00 - 12:00">09:00 - 12:00 (Tongda)</option>
+                                <option value="12:00 - 15:00">12:00 - 15:00 (Tushda)</option>
+                                <option value="15:00 - 18:00">15:00 - 18:00 (Kechga yaqin)</option>
+                                <option value="18:00 - 21:00">18:00 - 21:00 (Oqshomda)</option>
+                                <option value="21:00 - 00:00">21:00 - 00:00 (Tungi kutilmagan sovg'a)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Aniq manzil (Ko'cha, uy, xonadon, mo'ljal) *</label>
+                        <textarea name="delivery_address" required rows="2" placeholder="Masalan: Termiz sh., At-Termiziy ko'chasi, 15-uy, 4-xonadon (Mo'ljal: San'at saroyi yoki Markaziy maydon)" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:border-rose-400 outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-700 mb-1">Yetkazish sanasi *</label>
+                        <input type="date" name="delivery_date" id="orderDeliveryDate" required class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:border-rose-400 outline-none">
+                    </div>
+                </div>
+
+                <!-- Step 4: Tabriknoma matni -->
+                <div class="space-y-3 pt-3 border-t border-gray-100">
+                    <h4 class="text-xs font-extrabold text-rose-600 uppercase tracking-wider flex items-center gap-1.5">
+                        <i data-lucide="mail" class="w-4 h-4"></i> 4. Bepul tabriknoma kartasi uchun so'zlar
+                    </h4>
+                    <div>
+                        <textarea name="greeting_card_text" rows="2" placeholder="Masalan: Aziz onajonim, tavallud ayyomingiz qutlug' bo'lsin! Doim bizning baxtimizga sog' bo'ling..." class="w-full bg-gray-50 border border-gray-200 rounded-xl px-3 py-2 text-xs focus:border-rose-400 outline-none"></textarea>
+                    </div>
+                </div>
+
+                <!-- Step 5: To'lov usuli -->
+                <div class="space-y-3 pt-3 border-t border-gray-100">
+                    <h4 class="text-xs font-extrabold text-rose-600 uppercase tracking-wider flex items-center gap-1.5">
+                        <i data-lucide="credit-card" class="w-4 h-4"></i> 5. To'lov usuli
+                    </h4>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-semibold">
+                        <label class="payment-method-card flex flex-col items-center p-3 rounded-xl border border-rose-500 bg-rose-50/50 cursor-pointer text-center">
+                            <input type="radio" name="payment_method" value="click" checked class="hidden">
+                            <span class="text-rose-600 font-extrabold">Click</span>
+                            <span class="text-[10px] text-gray-500">Ilova orqali</span>
+                        </label>
+                        <label class="payment-method-card flex flex-col items-center p-3 rounded-xl border border-gray-200 bg-white cursor-pointer text-center">
+                            <input type="radio" name="payment_method" value="payme" class="hidden">
+                            <span class="text-cyan-600 font-extrabold">Payme</span>
+                            <span class="text-[10px] text-gray-500">Karta orqali</span>
+                        </label>
+                        <label class="payment-method-card flex flex-col items-center p-3 rounded-xl border border-gray-200 bg-white cursor-pointer text-center">
+                            <input type="radio" name="payment_method" value="uzum" class="hidden">
+                            <span class="text-purple-600 font-extrabold">Uzum Pay</span>
+                            <span class="text-[10px] text-gray-500">Tez to'lov</span>
+                        </label>
+                        <label class="payment-method-card flex flex-col items-center p-3 rounded-xl border border-gray-200 bg-white cursor-pointer text-center">
+                            <input type="radio" name="payment_method" value="cash" class="hidden">
+                            <span class="text-gray-800 font-extrabold">Naqd</span>
+                            <span class="text-[10px] text-gray-500">Kuryerga</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="pt-4 border-t border-gray-100 flex items-center justify-between">
+                    <div>
+                        <div class="text-[11px] text-gray-500">Jami to'lanadigan summa:</div>
+                        <div id="checkoutTotalAmount" class="font-extrabold text-xl text-rose-600">0 so'm</div>
+                    </div>
+                    <button type="submit" id="submitOrderBtn" class="px-8 py-3.5 bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-700 hover:to-pink-700 text-white font-bold rounded-2xl shadow-xl shadow-rose-500/30 transition-all text-xs sm:text-sm flex items-center gap-2">
+                        <span>Buyurtmani tasdiqlash</span>
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ORDER SUCCESS MODAL -->
+    <div id="successModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 text-center shadow-2xl relative animate-scale-up">
+            <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto mb-6 shadow-inner">
+                <i data-lucide="party-popper" class="w-10 h-10"></i>
+            </div>
+            
+            <h3 class="font-serif text-2xl font-bold text-gray-900 mb-2">Buyurtmangiz qabul qilindi!</h3>
+            <p class="text-xs sm:text-sm text-gray-500 mb-6">
+                Xaridingiz uchun tashakkur! Floristlarimiz allaqachon guldastangizni mehr bilan tayyorlashga kirishdilar.
+            </p>
+
+            <div class="bg-rose-50/70 border border-rose-100 rounded-2xl p-4 text-left space-y-2 mb-6">
+                <div class="flex justify-between text-xs">
+                    <span class="text-gray-500">Buyurtma raqami:</span>
+                    <span id="successOrderNumber" class="font-mono font-bold text-rose-700"></span>
+                </div>
+                <div class="flex justify-between text-xs">
+                    <span class="text-gray-500">Jami summa:</span>
+                    <span id="successOrderAmount" class="font-bold text-gray-900"></span>
+                </div>
+                <div class="flex justify-between text-xs">
+                    <span class="text-gray-500">Holati:</span>
+                    <span class="font-bold text-emerald-600">Yangi buyurtma (Ko'rilmoqda)</span>
+                </div>
+            </div>
+
+            <button onclick="closeSuccessModal()" class="w-full py-3.5 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-2xl shadow-lg shadow-rose-500/25 transition-all text-sm">
+                Xaridni davom ettirish
+            </button>
+        </div>
+    </div>
+
+    <!-- WISHLIST MODAL -->
+    <div id="wishlistModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[80vh] flex flex-col shadow-2xl overflow-hidden animate-scale-up">
+            <div class="p-6 border-b border-gray-100 flex items-center justify-between bg-rose-50/50">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="heart" class="w-5 h-5 text-rose-600 fill-rose-600"></i>
+                    <h3 class="font-serif font-bold text-lg text-gray-900">Sevimli Gullaringiz</h3>
+                </div>
+                <button onclick="toggleWishlistModal()" class="p-2 text-gray-400 hover:text-gray-700 rounded-full hover:bg-gray-100">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="wishlistItemsList" class="flex-1 overflow-y-auto p-6 space-y-3">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 space-y-2 pointer-events-none"></div>
+
+    <!-- Scripts -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
+
